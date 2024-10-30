@@ -13,20 +13,50 @@ export default function HooksScreen() {
     //     Alert.alert('Only before mounting components')
     // }, [])
 
-    useEffect(() => {
-        Alert.alert('Counter state changed!')
-    }, [count])         // mention the states or the variables so that the useEffect is called when they changes in the array.
+    // useEffect(() => {
+    //     Alert.alert('Counter state changed!')
+    // }, [count])         // mention the states or the variables so that the useEffect is called when they changes in the array.
+
+    const [show, setShow] = useState(false)
+    const [bTitle, setTitle] = useState('Show')
 
   return (
     <View style = {{
         alignSelf: 'center',
         alignItems: 'center'
     }}>
-        <Button
+        {/* <Button
             title = 'Increment Counter'
             onPress = {() => setCount(count + 1)}
         />
-        <Text>Counter: {count}</Text>
+        <Text>Counter: {count}</Text> */}
+
+        <Button
+            onPress = {() => {
+                show == true ? setTitle('Hide') : setTitle('Show')
+                setShow(!show)                
+            }}
+            title = {bTitle}
+        />
+
+        {
+            show == true ? <ShowComponent /> : null
+        }
+        
+
     </View>
   )
+}
+
+function ShowComponent(){
+
+    useEffect(() => {           // called when only the component ShowComponent(here) is unmounted.
+        return () => Alert.alert('ShowComponent component is unmounted')
+    })
+
+    return (
+        <View>
+            <Text>ShowComponent</Text>
+        </View>
+    )
 }
